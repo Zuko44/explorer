@@ -2,9 +2,11 @@
 import { onMounted, ref } from 'vue';
 import type { Item } from '../types/index';
 import { VTreeview } from 'vuetify/labs/VTreeview';
+import { useExplorerStore } from '../stores/explorer';
 
 const accent = ref();
 const header: string = 'Explorer';
+const explorerStore = useExplorerStore();
 
 const items = ref<Item[]>([
   {
@@ -102,7 +104,6 @@ const items = ref<Item[]>([
 
 interface Emits {
   (e: 'switchBaseModal'): void;
-  (e: 'exportHeader', body: string): void;
 }
 
 const emit = defineEmits<Emits>();
@@ -111,12 +112,8 @@ const closeHandler = () => {
   emit('switchBaseModal');
 };
 
-const exportHeader = () => {
-  emit('exportHeader', header);
-};
-
 const exportHeaderAndClose = () => {
-  exportHeader();
+  explorerStore.saveHeader(header);
   closeHandler();
 };
 
@@ -141,7 +138,7 @@ onMounted(() => {
         @click="closeHandler"
       />
       <h2>{{ header }}</h2>
-      <v-treeview :items="items"></v-treeview>
+      <v-treeview :items="items" activatable></v-treeview>
       <button class="close-and-select" @click="exportHeaderAndClose">ok</button>
     </div>
   </div>
