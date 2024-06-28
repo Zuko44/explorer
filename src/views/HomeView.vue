@@ -1,17 +1,18 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import BaseModal from '../components/BaseModal.vue';
-import { useExplorerStore } from '../stores/explorer';
 
 const isModalOpen = ref<boolean>(false);
-const explorerStore = useExplorerStore();
 </script>
 
 <template>
   <main>
     <button @click="isModalOpen = true">Открыть</button>
-    <div class="showTitle">{{ 'header title - ' + explorerStore.header }}</div>
-    <BaseModal v-if="isModalOpen" @switchBaseModal="isModalOpen = false" />
+    <BaseModal
+      title="Explorer"
+      v-if="isModalOpen"
+      @switchBaseModal="isModalOpen = false"
+    />
   </main>
 </template>
 

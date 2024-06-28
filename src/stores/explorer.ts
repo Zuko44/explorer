@@ -2,11 +2,13 @@ import { ref } from 'vue';
 import { defineStore } from 'pinia';
 
 export const useExplorerStore = defineStore('explorerStore', () => {
-  const header = ref<string>('');
+  const folderId = ref<string>();
 
-  const saveHeader = (body: string) => {
-    header.value = body;
+  const saveId = (id: string) => {
+    if (id) {
+      folderId.value = id;
+    }
   };
 
-  return { header, saveHeader };
+  return { folderId, saveId };
 });
